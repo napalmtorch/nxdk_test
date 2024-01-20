@@ -1,0 +1,22 @@
+struct vIn {
+	float4 color    : DIFFUSE;
+	float4 position : POSITION;
+};
+
+struct vOut {
+	float4 col : COLOR;
+	float4 pos : POSITION;
+};
+
+vOut main(vIn vertex, uniform float4x4 m_view)
+{
+	vOut   result;
+	float4 position;
+
+	position = mul(float4(vertex.position.xyz, 1.0f), m_view);
+	position.xyz = position.xyz / position.w;
+
+	result.col = vertex.color;
+	result.pos = position;
+	return result;
+}
